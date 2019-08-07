@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <profiles>
+        <profile>
+            <id>compiler</id>
+            <properties>
+                <JAVA_1_8_HOME>C:\Program Files\AdoptOpenJDK\jdk-8.0.222.10-openj9</JAVA_1_8_HOME>
+                <JAVA_12_HOME>C:\Program Files\AdoptOpenJDK\jdk-12.0.2.10-openj9</JAVA_12_HOME>
+            </properties>
+        </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>compiler</activeProfile>
+    </activeProfiles>
+</settings>
