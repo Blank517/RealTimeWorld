@@ -14,7 +14,7 @@ loadbefore: []
 commands:
   realtimeworld:
     description: RealTimeWorld command
-    aliases: [realtime, rt, rtw]
+    aliases: [rtw]
     permission: realtimeworld.cmd
     permission-message: You can't use this command!
 permissions:

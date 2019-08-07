@@ -87,8 +87,8 @@ class Commands implements CommandExecutor {
                     }
                     break;
             }
-            message += "| " + ChatColor.YELLOW + "/" + alias + ChatColor.AQUA + " enable" + ChatColor.WHITE + " - Enable server time syncing\n" +
-                    ChatColor.GOLD + "| " + ChatColor.YELLOW + "/" + alias + ChatColor.AQUA + " disable" + ChatColor.WHITE + " - Disable server time syncing\n" +
+            message += "| " + ChatColor.YELLOW + "/" + alias + ChatColor.AQUA + " enable" + ChatColor.WHITE + " - Enable the daylight synchronization\n" +
+                    ChatColor.GOLD + "| " + ChatColor.YELLOW + "/" + alias + ChatColor.AQUA + " disable" + ChatColor.WHITE + " - Disable the daylight synchronization\n" +
                     ChatColor.GOLD + "| " + ChatColor.YELLOW + "/" + alias + ChatColor.AQUA + " whitelist list\n" +
                     ChatColor.GOLD + "| " + ChatColor.YELLOW + "/" + alias + ChatColor.AQUA + " whitelist add " + ChatColor.GREEN + "<world>\n" +
                     ChatColor.GOLD + "| " + ChatColor.YELLOW + "/" + alias + ChatColor.AQUA + " whitelist remove " + ChatColor.GREEN + "<world>\n" +
