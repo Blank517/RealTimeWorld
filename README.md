@@ -1,3 +1,4 @@
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 <p align="center">
 <img align="left" src="https://i.ibb.co/CKqbVFV/Real-Time-World-Logo.png">
 <img align="right" src="https://i.ibb.co/CKqbVFV/Real-Time-World-Logo.png">
