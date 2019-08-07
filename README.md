@@ -1,4 +1,4 @@
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)![GitHub last commit](https://img.shields.io/github/last-commit/Blank517/RealTimeWorld)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)![GitHub last commit](https://img.shields.io/github/last-commit/Blank517/RealTimeWorld)![Spiget tested server versions](https://img.shields.io/spiget/tested-versions/70124)
 <p align="center">
 <img align="left" src="https://i.ibb.co/CKqbVFV/Real-Time-World-Logo.png">
 <img align="right" src="https://i.ibb.co/CKqbVFV/Real-Time-World-Logo.png">
@@ -12,16 +12,16 @@ This plugin lengthen the daylight cycle from 20 minutes to 24 hours synchronizin
 The time is synchronized to the second so the sun 🌤️, the moon 🌔 and the stars ✨ make a smooth movement in the sky
 
 ## ![Commands](https://lingtalfi.com/services/pngtext?color=852020&size=22&text=Commands)
-| Command | Description |
-| --- | --- |
-| /rtw enable | Enable the daylight synchronization |
-| /rtw disable | Disable the daylight synchronization |
-| /rtw whitelist list | Show in which worlds is enabled the synchronization |
-| /rtw whitelist add _world_ | Add a world to the whitelist |
-| /rtw whitelist remove _world_ | Remove a world from the whitelist |
+| Command                       | Description                                         |
+| ----------------------------- | --------------------------------------------------- |
+| /rtw enable                   | Enable the daylight synchronization                 |
+| /rtw disable                  | Disable the daylight synchronization                |
+| /rtw whitelist list           | Show in which worlds is enabled the synchronization |
+| /rtw whitelist add _world_    | Add a world to the whitelist                        |
+| /rtw whitelist remove _world_ | Remove a world from the whitelist                   |
 
 ## ![Permissions](https://lingtalfi.com/services/pngtext?color=852020&size=22&text=Permissions)
-| Permission | Description |
-| --- | --- |
-| realtimeworld.* | Gives all the following permissions |
+| Permission        | Description                         |
+| ----------------- | ----------------------------------- |
+| realtimeworld.*   | Gives all the following permissions |
 | realtimeworld.cmd | Allow to use /realtimeworld command |
