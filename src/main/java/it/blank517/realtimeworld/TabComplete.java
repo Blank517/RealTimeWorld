@@ -28,7 +28,7 @@ class TabComplete implements TabCompleter {
         if (command.getName().equalsIgnoreCase("realtimeworld")) {
             final int argsLength = args.length;
             if (argsLength <= 3) {
-                if (args[0].equals("whitelist") && argsLength == 3) {
+                if (argsLength == 3) {
                     List<World> worlds = plugin.getServer().getWorlds();
                     ArrayList<String> Hints_3 = new ArrayList<>();
                     for (World world : worlds) {

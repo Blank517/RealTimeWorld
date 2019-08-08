@@ -17,7 +17,7 @@ class Messages {
     }
 
     String get(int type, String text1) {
-        String message = "\n" + ChatColor.GOLD + "============" + ChatColor.YELLOW + " RealTimeWorld " + ChatColor.GOLD + "============\n";
+        String message = "\n" + ChatColor.GOLD + "=============" + ChatColor.YELLOW + " RealTimeWorld " + ChatColor.GOLD + "=============\n";
         switch (type) {
             case -1:
                 message += ChatColor.RED + "You can't use this command!";
@@ -55,6 +55,9 @@ class Messages {
                 break;
             case 7:
                 message += ChatColor.GOLD + "| " + ChatColor.WHITE + "Removed from whitelist: '" + text1 + "'\n";
+                break;
+            case 8:
+                message += ChatColor.GOLD + "| " + ChatColor.RED + "You must be a player to use this command\n";
                 break;
             default:
                 message += ChatColor.GOLD + "| " + ChatColor.RED + "THIS MESSAGE SHOULD NOT EXIST\n";

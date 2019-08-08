@@ -16,6 +16,7 @@ The time is synchronized to the second so the sun 🌤️, the moon 🌔 and the
 | ----------------------------- | --------------------------------------------------- |
 | /rtw enable                   | Enable the daylight synchronization                 |
 | /rtw disable                  | Disable the daylight synchronization                |
+| /rtw gui                      | Open an user frendly GUI                            |
 | /rtw whitelist list           | Show in which worlds is enabled the synchronization |
 | /rtw whitelist add _world_    | Add a world to the whitelist                        |
 | /rtw whitelist remove _world_ | Remove a world from the whitelist                   |
@@ -27,5 +28,5 @@ The time is synchronized to the second so the sun 🌤️, the moon 🌔 and the
 | realtimeworld.cmd | Allow to use /realtimeworld command |
 
 ## ![ToDo](https://lingtalfi.com/services/pngtext?color=852020&size=22&text=ToDo)
-- An inventory GUI to manage the worlds
+- ~~An inventory GUI to manage the worlds~~ Done ^-^
 - Idk, what do you propose I might add? (•ิ_•ิ)?

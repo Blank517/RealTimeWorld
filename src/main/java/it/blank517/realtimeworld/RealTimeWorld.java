@@ -1,5 +1,6 @@
 package it.blank517.realtimeworld;
 
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -16,6 +17,7 @@ public class RealTimeWorld extends JavaPlugin {
     private Task task;
     private Methods methods;
     private Messages messages;
+    private InvWorldsList invWorldsList;
 
     static RealTimeWorld getInstance() {
         return plugin;
@@ -37,11 +39,16 @@ public class RealTimeWorld extends JavaPlugin {
         return messages;
     }
 
+    InvWorldsList getInvWorldsList() {
+        return invWorldsList;
+    }
+
     private HashMap<Integer, ArrayList<String>> loadHints() {
         ArrayList<String> Hints_1 = new ArrayList<>();
-        Hints_1.add("whitelist");
         Hints_1.add("disable");
         Hints_1.add("enable");
+        Hints_1.add("gui");
+        Hints_1.add("whitelist");
 
         ArrayList<String> Hints_2 = new ArrayList<>();
         Hints_2.add("add");
@@ -81,6 +88,8 @@ public class RealTimeWorld extends JavaPlugin {
         methods = new Methods(this);
         messages = new Messages(this);
         config = new Config(this);
+        invWorldsList = new InvWorldsList(this, new GUIManager("RealTimeWorld", 54));
+
         config.load(Paths.get(this.getDataFolder().toString(), "config.yml"));
         methods.setWorldsDaylightCycle();
 
@@ -99,6 +108,9 @@ public class RealTimeWorld extends JavaPlugin {
             getLogger().info(messages.get(3));
             methods.setWorldsDaylightCycle();
         }
+
+        PluginManager pm = getServer().getPluginManager();
+        pm.registerEvents(new InventoryClick(this), plugin);
 
         Objects.requireNonNull(getCommand("realtimeworld")).setTabCompleter(new TabComplete(this, loadHints()));
         Objects.requireNonNull(getCommand("realtimeworld")).setExecutor(new Commands(this));

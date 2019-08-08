@@ -32,32 +32,44 @@ class Commands implements CommandExecutor {
             int argsLength = args.length;
             switch (argsLength) {
                 case 1:
-                    if (args[0].equals("enable")) {
-                        if (!config.isEnabled()) {
-                            config.set("Enabled", true);
-                            config.save();
-                            config.setEnabled(true);
-                            task.startTask(config.getWhitelist());
-                            // Time synchronization enabled
-                            sender.sendMessage(messages.get(1));
-                        } else {
-                            // Time synchronization is already enabled
-                            sender.sendMessage(messages.get(2));
-                        }
-                        return true;
-                    } else if (args[0].equals("disable")) {
-                        if (config.isEnabled()) {
-                            config.set("Enabled", false);
-                            config.save();
-                            config.setEnabled(false);
-                            task.stopTask();
-                            // Time synchronization disabled
-                            sender.sendMessage(messages.get(3));
-                        } else {
-                            // Time synchronization is already disabled
-                            sender.sendMessage(messages.get(4));
-                        }
-                        return true;
+                    switch (args[0]) {
+                        case "enable":
+                            if (!config.isEnabled()) {
+                                config.set("Enabled", true);
+                                config.save();
+                                config.setEnabled(true);
+                                task.startTask(config.getWhitelist());
+                                // Time synchronization enabled
+                                sender.sendMessage(messages.get(1));
+                            } else {
+                                // Time synchronization is already enabled
+                                sender.sendMessage(messages.get(2));
+                            }
+                            return true;
+                        case "disable":
+                            if (config.isEnabled()) {
+                                config.set("Enabled", false);
+                                config.save();
+                                config.setEnabled(false);
+                                task.stopTask();
+                                // Time synchronization disabled
+                                sender.sendMessage(messages.get(3));
+                            } else {
+                                // Time synchronization is already disabled
+                                sender.sendMessage(messages.get(4));
+                            }
+                            return true;
+                        case "gui":
+                            if (sender instanceof Player) {
+                                plugin.getInvWorldsList().load();
+                                plugin.getInvWorldsList().getGUIManager().openInventory((Player) sender);
+                                return true;
+                            } else {
+                                // You must be a player to use this command
+                                sender.sendMessage(messages.get(8));
+                                // No return so it print the help message
+                            }
+                            break;
                     }
                     break;
                 case 2:
@@ -84,7 +96,7 @@ class Commands implements CommandExecutor {
                                     task.stopTask();
                                 }
                                 // Added to whitelist: '...'
-                                sender.sendMessage(messages.get(6));
+                                sender.sendMessage(messages.get(6, args[2]));
                                 if (config.isEnabled()) {
                                     task.startTask(whitelist);
                                 }
@@ -97,7 +109,7 @@ class Commands implements CommandExecutor {
                                 config.save();
                                 plugin.getMethods().setWorldsDaylightCycle();
                                 // Removed from whitelist: '...'
-                                sender.sendMessage(messages.get(7));
+                                sender.sendMessage(messages.get(7, args[2]));
                                 return true;
                             }
                         }
