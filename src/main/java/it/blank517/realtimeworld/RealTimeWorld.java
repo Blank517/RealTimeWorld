@@ -82,6 +82,10 @@ public class RealTimeWorld extends JavaPlugin {
                             break;
                         case UNAVAILABLE:
                             getLogger().warning("Unable to perform an update check.");
+                            break;
+                        default:
+                            getLogger().warning("There is a problem in the Update Checker.");
+                            break;
                     }
                 }).check();
 

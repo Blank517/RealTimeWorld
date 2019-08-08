@@ -18,8 +18,103 @@ class Commands implements CommandExecutor {
         this.plugin = plugin;
     }
 
+    private void argsOne(CommandSender sender, String[] args, Config config, Task task, Messages messages) {
+        switch (args[0]) {
+            case "enable": {
+                if (!config.isEnabled()) {
+                    config.set("Enabled", true);
+                    config.save();
+                    config.setEnabled(true);
+                    task.startTask(config.getWhitelist());
+                    // Time synchronization enabled
+                    sender.sendMessage(messages.get(1));
+                } else {
+                    // Time synchronization is already enabled
+                    sender.sendMessage(messages.get(2));
+                }
+                break;
+            }
+            case "disable": {
+                if (config.isEnabled()) {
+                    config.set("Enabled", false);
+                    config.save();
+                    config.setEnabled(false);
+                    task.stopTask();
+                    // Time synchronization disabled
+                    sender.sendMessage(messages.get(3));
+                } else {
+                    // Time synchronization is already disabled
+                    sender.sendMessage(messages.get(4));
+                }
+                break;
+            }
+            case "gui": {
+                if (sender instanceof Player) {
+                    plugin.getInvWorldsList().load();
+                    plugin.getInvWorldsList().getGUIManager().openInventory((Player) sender);
+                    break;
+                } else {
+                    // You must be a player to use this command
+                    sender.sendMessage(messages.get(8));
+                    // No return so it print the help message
+                }
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    }
+
+    @SuppressWarnings("unused")
+    private void argsTwo(CommandSender sender, String[] args, Config config, Task task, Messages messages) {
+        if (args[0].equals("whitelist") && args[1].equals("list")) {
+            // Worlds Whitelist:
+            // - ...
+            sender.sendMessage(messages.get(5));
+        }
+    }
+
+    private void argsThree(CommandSender sender, String[] args, Config config, Task task, Messages messages) {
+        if (args[0].equals("whitelist")) {
+            switch (args[1]) {
+                case "add": {
+                    List<String> whitelist = config.get().getStringList("Whitelist");
+                    whitelist.add(args[2]);
+                    whitelist = whitelist.stream()
+                            .distinct()
+                            .collect(Collectors.toList());
+                    config.set("Whitelist", whitelist);
+                    config.save();
+                    if (task.isRunning()) {
+                        task.stopTask();
+                    }
+                    // Added to whitelist: '...'
+                    sender.sendMessage(messages.get(6, args[2]));
+                    if (config.isEnabled()) {
+                        task.startTask(whitelist);
+                    }
+                    break;
+                }
+                case "remove": {
+                    List<String> whitelist = config.get().getStringList("Whitelist");
+                    whitelist.remove(args[2]);
+                    config.set("Whitelist", whitelist);
+                    config.save();
+                    plugin.getMethods().setWorldsDaylightCycle();
+                    // Removed from whitelist: '...'
+                    sender.sendMessage(messages.get(7, args[2]));
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
+        }
+    }
+
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
+    public boolean onCommand(@NotNull CommandSender sender, Command command,
                              @NotNull String alias, @NotNull String[] args) {
         if (command.getName().equalsIgnoreCase("realtimeworld")) {
             if (sender instanceof Player && !sender.hasPermission("realtimeworld.cmd")) {
@@ -29,95 +124,22 @@ class Commands implements CommandExecutor {
             Messages messages = plugin.getMessages();
             Config config = plugin.getCustomConfig();
             Task task = plugin.getTask();
-            int argsLength = args.length;
-            switch (argsLength) {
+            switch (args.length) {
                 case 1:
-                    switch (args[0]) {
-                        case "enable":
-                            if (!config.isEnabled()) {
-                                config.set("Enabled", true);
-                                config.save();
-                                config.setEnabled(true);
-                                task.startTask(config.getWhitelist());
-                                // Time synchronization enabled
-                                sender.sendMessage(messages.get(1));
-                            } else {
-                                // Time synchronization is already enabled
-                                sender.sendMessage(messages.get(2));
-                            }
-                            return true;
-                        case "disable":
-                            if (config.isEnabled()) {
-                                config.set("Enabled", false);
-                                config.save();
-                                config.setEnabled(false);
-                                task.stopTask();
-                                // Time synchronization disabled
-                                sender.sendMessage(messages.get(3));
-                            } else {
-                                // Time synchronization is already disabled
-                                sender.sendMessage(messages.get(4));
-                            }
-                            return true;
-                        case "gui":
-                            if (sender instanceof Player) {
-                                plugin.getInvWorldsList().load();
-                                plugin.getInvWorldsList().getGUIManager().openInventory((Player) sender);
-                                return true;
-                            } else {
-                                // You must be a player to use this command
-                                sender.sendMessage(messages.get(8));
-                                // No return so it print the help message
-                            }
-                            break;
-                    }
+                    argsOne(sender, args, config, task, messages);
                     break;
                 case 2:
-                    if (args[0].equals("whitelist") && args[1].equals("list")) {
-                        // Worlds Whitelist:
-                        // - ...
-                        sender.sendMessage(messages.get(5));
-                        return true;
-                    }
+                    argsTwo(sender, args, config, task, messages);
                     break;
                 case 3:
-                    if (args[0].equals("whitelist")) {
-                        String firstArgument = args[1];
-                        switch (firstArgument) {
-                            case "add": {
-                                List<String> whitelist = config.get().getStringList("Whitelist");
-                                whitelist.add(args[2]);
-                                whitelist = whitelist.stream()
-                                        .distinct()
-                                        .collect(Collectors.toList());
-                                config.set("Whitelist", whitelist);
-                                config.save();
-                                if (task.isRunning()) {
-                                    task.stopTask();
-                                }
-                                // Added to whitelist: '...'
-                                sender.sendMessage(messages.get(6, args[2]));
-                                if (config.isEnabled()) {
-                                    task.startTask(whitelist);
-                                }
-                                return true;
-                            }
-                            case "remove": {
-                                List<String> whitelist = config.get().getStringList("Whitelist");
-                                whitelist.remove(args[2]);
-                                config.set("Whitelist", whitelist);
-                                config.save();
-                                plugin.getMethods().setWorldsDaylightCycle();
-                                // Removed from whitelist: '...'
-                                sender.sendMessage(messages.get(7, args[2]));
-                                return true;
-                            }
-                        }
-                    }
+                    argsThree(sender, args, config, task, messages);
                     break;
+                default: {
+                    // Help message
+                    sender.sendMessage(messages.get(0, alias));
+                    break;
+                }
             }
-            // Help message
-            sender.sendMessage(messages.get(0, alias));
         }
         return false;
     }

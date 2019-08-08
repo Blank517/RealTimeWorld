@@ -20,7 +20,7 @@ class Messages {
         String message = "\n" + ChatColor.GOLD + "=============" + ChatColor.YELLOW + " RealTimeWorld " + ChatColor.GOLD + "=============\n";
         switch (type) {
             case -1:
-                message += ChatColor.RED + "You can't use this command!";
+                message += ChatColor.GOLD + "| " + ChatColor.RED + "You can't use this command!\n";
                 break;
             case 0:
                 message += "| " + ChatColor.YELLOW + "/" + text1 + ChatColor.AQUA + " enable" + ChatColor.WHITE + " - Enable the daylight synchronization\n" +
@@ -61,6 +61,7 @@ class Messages {
                 break;
             default:
                 message += ChatColor.GOLD + "| " + ChatColor.RED + "THIS MESSAGE SHOULD NOT EXIST\n";
+                break;
         }
         message += ChatColor.GOLD + "=======================================";
         return message;
