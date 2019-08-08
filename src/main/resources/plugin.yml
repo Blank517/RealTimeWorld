@@ -1,11 +1,11 @@
 name: RealTimeWorld
-version: "1.0"
-main: it.blank517.realtimeworld.Main
+version: "2.0.0"
+main: it.blank517.realtimeworld.RealTimeWorld
 description: Syncronize the server time with your Minecraft worlds
 load: POSTWORLD
 author: Blank517
 authors: []
-website: http://blank517.dlinkddns.com
+website: https://www.spigotmc.org/resources/realtimeworld.70124/
 database: false
 depend: []
 prefix: RTW
@@ -16,7 +16,6 @@ commands:
     description: RealTimeWorld command
     aliases: [rtw]
     permission: realtimeworld.cmd
-    permission-message: You can't use this command!
 permissions:
   realtimeworld.*:
     description: Allows a player to use any RealTimeWorld command

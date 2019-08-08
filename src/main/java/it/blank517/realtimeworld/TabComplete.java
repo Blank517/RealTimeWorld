@@ -12,14 +12,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-class TabCompleteCmds implements TabCompleter {
+class TabComplete implements TabCompleter {
 
-    private final Main plugin;
-    private final HashMap<Integer, ArrayList<String>> HINTS;
+    private final RealTimeWorld plugin;
+    private final HashMap<Integer, ArrayList<String>> Hints;
 
-    TabCompleteCmds(Main plugin, HashMap<Integer, ArrayList<String>> HINTS) {
+    TabComplete(RealTimeWorld plugin, HashMap<Integer, ArrayList<String>> Hints) {
         this.plugin = plugin;
-        this.HINTS = HINTS;
+        this.Hints = Hints;
     }
 
     @Override
@@ -28,17 +28,17 @@ class TabCompleteCmds implements TabCompleter {
         if (command.getName().equalsIgnoreCase("realtimeworld")) {
             final int argsLength = args.length;
             if (argsLength <= 3) {
-                if (argsLength == 3) {
+                if (args[0].equals("whitelist") && argsLength == 3) {
                     List<World> worlds = plugin.getServer().getWorlds();
-                    ArrayList<String> HINTS_3 = new ArrayList<>();
+                    ArrayList<String> Hints_3 = new ArrayList<>();
                     for (World world : worlds) {
-                        HINTS_3.add(world.getName());
+                        Hints_3.add(world.getName());
                     }
-                    HINTS.put(3, HINTS_3);
+                    Hints.put(3, Hints_3);
                 }
                 final List<String> completions = new ArrayList<>();
-                //copy matches of first argument from list (ex: if first arg is 'e' will return just 'enable')
-                StringUtil.copyPartialMatches(args[argsLength - 1], HINTS.get(args.length), completions);
+                // Copy matches of first argument from list (ex: if first arg is 'e' will return just 'enable')
+                StringUtil.copyPartialMatches(args[argsLength - 1], Hints.get(args.length), completions);
                 Collections.sort(completions);
                 return completions;
             }

@@ -25,3 +25,7 @@ The time is synchronized to the second so the sun 🌤️, the moon 🌔 and the
 | ----------------- | ----------------------------------- |
 | realtimeworld.*   | Gives all the following permissions |
 | realtimeworld.cmd | Allow to use /realtimeworld command |
+
+## ![ToDo](https://lingtalfi.com/services/pngtext?color=852020&size=22&text=ToDo)
+- An inventory GUI to manage the worlds
+- Idk, what do you propose I might add? (•ิ_•ิ)?

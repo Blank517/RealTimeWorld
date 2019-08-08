@@ -1,17 +1,22 @@
 package it.blank517.realtimeworld;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 class Commands implements CommandExecutor {
+
+    private final RealTimeWorld plugin;
+
+    Commands(RealTimeWorld plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
@@ -21,79 +26,86 @@ class Commands implements CommandExecutor {
                 return false;
             }
             Arrays.setAll(args, i -> args[i].toLowerCase());
-            String message = ChatColor.GOLD + "=============" + ChatColor.YELLOW + " RealTimeWorld " + ChatColor.GOLD + "=============\n";
-            switch (args.length) {
+            Messages messages = plugin.getMessages();
+            Config config = plugin.getCustomConfig();
+            Task task = plugin.getTask();
+            int argsLength = args.length;
+            switch (argsLength) {
                 case 1:
                     if (args[0].equals("enable")) {
-                        Main.config.set("Enabled", true);
-                        Main.config.save();
-                        Main.internalClock.StartTask(Main.config.whitelist, 0);
-                        message += ChatColor.GOLD + "| " + ChatColor.GREEN + "Time synchronization enabled\n" +
-                                ChatColor.GOLD + "=======================================";
-                        sender.sendMessage(message);
+                        if (!config.isEnabled()) {
+                            config.set("Enabled", true);
+                            config.save();
+                            config.setEnabled(true);
+                            task.startTask(config.getWhitelist());
+                            // Time synchronization enabled
+                            sender.sendMessage(messages.get(1));
+                        } else {
+                            // Time synchronization is already enabled
+                            sender.sendMessage(messages.get(2));
+                        }
                         return true;
                     } else if (args[0].equals("disable")) {
-                        Main.config.set("Enabled", false);
-                        Main.config.save();
-                        Main.internalClock.StopTask();
-                        message += ChatColor.GOLD + "| " + ChatColor.RED + "Time synchronization disabled\n" +
-                                ChatColor.GOLD + "=======================================";
-                        sender.sendMessage(message);
+                        if (config.isEnabled()) {
+                            config.set("Enabled", false);
+                            config.save();
+                            config.setEnabled(false);
+                            task.stopTask();
+                            // Time synchronization disabled
+                            sender.sendMessage(messages.get(3));
+                        } else {
+                            // Time synchronization is already disabled
+                            sender.sendMessage(messages.get(4));
+                        }
                         return true;
                     }
                     break;
                 case 2:
                     if (args[0].equals("whitelist") && args[1].equals("list")) {
-                        List<String> whitelist = Main.config.get().getStringList("Whitelist");
-                        StringBuilder sbMessage = new StringBuilder(message)
-                                .append("| Worlds Whitelist:\n");
-                        for (String world : whitelist) {
-                            sbMessage.append(ChatColor.GOLD).append("|").append(ChatColor.WHITE).append(" - ").append(world).append("\n");
-                        }
-                        sbMessage.append(ChatColor.GOLD).append("=======================================");
-                        sender.sendMessage(sbMessage.toString());
+                        // Worlds Whitelist:
+                        // - ...
+                        sender.sendMessage(messages.get(5));
                         return true;
                     }
                     break;
                 case 3:
                     if (args[0].equals("whitelist")) {
-                        switch (args[1]) {
+                        String firstArgument = args[1];
+                        switch (firstArgument) {
                             case "add": {
-                                List<String> world = new ArrayList<>();
-                                world.add(args[2]);
-                                List<String> whitelist = Main.config.get().getStringList("Whitelist");
+                                List<String> whitelist = config.get().getStringList("Whitelist");
                                 whitelist.add(args[2]);
-                                Main.config.set("Whitelist", whitelist);
-                                Main.config.save();
-                                Main.internalClock.StopTask();
-                                message += ChatColor.GOLD + "| " + ChatColor.WHITE + "Added to whitelist: '" + args[2] + "'\n" +
-                                        ChatColor.GOLD + "=======================================";
-                                sender.sendMessage(message);
-                                Main.internalClock.StartTask(world, 0);
+                                whitelist = whitelist.stream()
+                                        .distinct()
+                                        .collect(Collectors.toList());
+                                config.set("Whitelist", whitelist);
+                                config.save();
+                                if (task.isRunning()) {
+                                    task.stopTask();
+                                }
+                                // Added to whitelist: '...'
+                                sender.sendMessage(messages.get(6));
+                                if (config.isEnabled()) {
+                                    task.startTask(whitelist);
+                                }
                                 return true;
                             }
                             case "remove": {
-                                List<String> whitelist = Main.config.get().getStringList("Whitelist");
+                                List<String> whitelist = config.get().getStringList("Whitelist");
                                 whitelist.remove(args[2]);
-                                Main.config.set("Whitelist", whitelist);
-                                Main.config.save();
-                                Main.config.setWorldsDaylightCycle();
-                                message += ChatColor.GOLD + "| " + ChatColor.WHITE + "Removed from whitelist: '" + args[2] + "'\n" +
-                                        ChatColor.GOLD + "=======================================";
-                                sender.sendMessage(message);
+                                config.set("Whitelist", whitelist);
+                                config.save();
+                                plugin.getMethods().setWorldsDaylightCycle();
+                                // Removed from whitelist: '...'
+                                sender.sendMessage(messages.get(7));
                                 return true;
                             }
                         }
                     }
                     break;
             }
-            message += "| " + ChatColor.YELLOW + "/" + alias + ChatColor.AQUA + " enable" + ChatColor.WHITE + " - Enable the daylight synchronization\n" +
-                    ChatColor.GOLD + "| " + ChatColor.YELLOW + "/" + alias + ChatColor.AQUA + " disable" + ChatColor.WHITE + " - Disable the daylight synchronization\n" +
-                    ChatColor.GOLD + "| " + ChatColor.YELLOW + "/" + alias + ChatColor.AQUA + " whitelist list\n" +
-                    ChatColor.GOLD + "| " + ChatColor.YELLOW + "/" + alias + ChatColor.AQUA + " whitelist add " + ChatColor.GREEN + "<world>\n" +
-                    ChatColor.GOLD + "| " + ChatColor.YELLOW + "/" + alias + ChatColor.AQUA + " whitelist remove " + ChatColor.GREEN + "<world>\n" +
-                    ChatColor.GOLD + "=======================================";
-            sender.sendMessage(message);
+            // Help message
+            sender.sendMessage(messages.get(0, alias));
         }
         return false;
     }
