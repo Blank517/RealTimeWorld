@@ -23,10 +23,16 @@ class InvWorldsList {
 
     void load() {
         List<World> worlds = plugin.getServer().getWorlds();
-        List<String> whitelist = plugin.getCustomConfig().getWhitelist();
-        String worldName;
+        List<String> whitelist = plugin.getCustomConfig().get().getStringList("Whitelist");
+        if (plugin.getCustomConfig().isEnabled()) {
+            guiManager.setItem(53, ItemStackHelper.createItem(Material.GREEN_WOOL, 1, ChatColor.RESET + "Plugin",
+                    Collections.singletonList(ChatColor.GREEN + "Enabled")));
+        } else {
+            guiManager.setItem(53, ItemStackHelper.createItem(Material.RED_WOOL, 1, ChatColor.RESET + "Plugin",
+                    Collections.singletonList(ChatColor.RED + "Disabled")));
+        }
         for (int i = 0; i < worlds.size(); i++) {
-            worldName = worlds.get(i).getName();
+            String worldName = worlds.get(i).getName();
             if (whitelist.contains(worldName)) {
                 guiManager.setItem(i, ItemStackHelper.createItem(Material.GREEN_WOOL, 1, ChatColor.RESET + worldName,
                         Collections.singletonList(ChatColor.GREEN + "Sync: enabled")));

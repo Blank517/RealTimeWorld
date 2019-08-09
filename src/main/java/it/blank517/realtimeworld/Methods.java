@@ -3,6 +3,8 @@ package it.blank517.realtimeworld;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 
+import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -22,8 +24,10 @@ class Methods {
         }
     }
 
-    long realTimeToTickTime() {
-        ZonedDateTime now = ZonedDateTime.now();
+    private long realTimeToTickTime() {
+        ZoneId timezone = plugin.getCustomConfig().getTimezone();
+        Instant instant = Instant.now();
+        ZonedDateTime now = ZonedDateTime.ofInstant(instant, timezone);
         double hour = now.getHour();
         double minute = now.getMinute();
         double second = now.getSecond();
@@ -43,6 +47,9 @@ class Methods {
     void setWorldsDaylightCycle() {
         List<World> worlds = plugin.getServer().getWorlds();
         List<String> whitelist = plugin.getCustomConfig().getWhitelist();
+        if (!plugin.getCustomConfig().isEnabled()) {
+            whitelist.clear();
+        }
         for (World world : worlds) {
             if (whitelist.contains(world.getName())) {
                 world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);

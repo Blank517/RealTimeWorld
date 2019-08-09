@@ -1,9 +1,6 @@
 package it.blank517.realtimeworld;
 
-import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.List;
 
 class Task {
 
@@ -15,10 +12,6 @@ class Task {
         this.plugin = plugin;
     }
 
-    BukkitRunnable getRunnable() {
-        return task;
-    }
-
     private void initializeTask() {
         task = new BukkitRunnable() {
             @Override
@@ -28,13 +21,15 @@ class Task {
         };
     }
 
-    void startTask(List<String> worlds) {
+    void startTask() {
         if (isRunning()) {
             stopTask();
         }
         initializeTask();
         plugin.getMethods().setWorldsDaylightCycle();
-        new Thread(new FastForward(plugin, worlds, plugin.getMethods().realTimeToTickTime(), 0)).start();
+        plugin.getMethods().whitelistDaylightCycle(false);
+        task.runTaskTimer(plugin, 0, 20);
+        id = task.getTaskId();
     }
 
     void stopTask() {
@@ -43,14 +38,7 @@ class Task {
         plugin.getMethods().whitelistDaylightCycle(true);
     }
 
-    void setId(int runnableId) {
-        id = runnableId;
-    }
-
     Boolean isRunning() {
-        if (id == -1) {
-            return false;
-        }
-        return Bukkit.getScheduler().isCurrentlyRunning(task.getTaskId());
+        return id != -1;
     }
 }

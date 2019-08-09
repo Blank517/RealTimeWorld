@@ -25,6 +25,10 @@ public class InventoryClick implements Listener {
     @EventHandler
     public void event(InventoryClickEvent event) {
         Inventory inv = event.getClickedInventory();
+        ItemStack clickedItem = event.getCurrentItem();
+        if (clickedItem == null || clickedItem.getType() == Material.AIR) {
+            return;
+        }
         InventoryHolder holder = Objects.requireNonNull(inv).getHolder();
         if (holder != plugin.getInvWorldsList().getGUIManager().getInventory().getHolder()) {
             return;
@@ -33,13 +37,15 @@ public class InventoryClick implements Listener {
             event.setCancelled(true);
         }
         event.setCancelled(true);
-        ItemStack clickedItem = event.getCurrentItem();
-        if (clickedItem == null || clickedItem.getType() == Material.AIR) {
-            return;
-        }
         Player player = (Player) event.getWhoClicked();
         String clickedItemName = ChatColor.stripColor(clickedItem.getItemMeta().getDisplayName());
-        if (plugin.getCustomConfig().getWhitelist().contains(clickedItemName)) {
+        if (event.getRawSlot() == 53) {
+            if (plugin.getCustomConfig().isEnabled()) {
+                player.performCommand("realtimeworld disable");
+            } else {
+                player.performCommand("realtimeworld enable");
+            }
+        } else if (plugin.getCustomConfig().getWhitelist().contains(clickedItemName)) {
             player.performCommand("realtimeworld whitelist remove " + clickedItemName);
         } else {
             player.performCommand("realtimeworld whitelist add " + clickedItemName);

@@ -6,8 +6,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class RealTimeWorld extends JavaPlugin {
@@ -41,25 +39,6 @@ public class RealTimeWorld extends JavaPlugin {
 
     InvWorldsList getInvWorldsList() {
         return invWorldsList;
-    }
-
-    private HashMap<Integer, ArrayList<String>> loadHints() {
-        ArrayList<String> Hints_1 = new ArrayList<>();
-        Hints_1.add("disable");
-        Hints_1.add("enable");
-        Hints_1.add("gui");
-        Hints_1.add("whitelist");
-
-        ArrayList<String> Hints_2 = new ArrayList<>();
-        Hints_2.add("add");
-        Hints_2.add("list");
-        Hints_2.add("remove");
-
-        HashMap<Integer, ArrayList<String>> Hints = new HashMap<>();
-        Hints.put(1, Hints_1);
-        Hints.put(2, Hints_2);
-
-        return Hints;
     }
 
     @Override
@@ -104,7 +83,7 @@ public class RealTimeWorld extends JavaPlugin {
             BukkitRunnable runnable = new BukkitRunnable() {
                 @Override
                 public void run() {
-                    task.startTask(config.getWhitelist());
+                    task.startTask();
                 }
             };
             runnable.runTaskLater(this, 1L);
@@ -116,7 +95,7 @@ public class RealTimeWorld extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new InventoryClick(this), plugin);
 
-        Objects.requireNonNull(getCommand("realtimeworld")).setTabCompleter(new TabComplete(this, loadHints()));
+        Objects.requireNonNull(getCommand("realtimeworld")).setTabCompleter(new TabComplete(this));
         Objects.requireNonNull(getCommand("realtimeworld")).setExecutor(new Commands(this));
     }
 }

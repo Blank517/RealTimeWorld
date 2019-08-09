@@ -1,8 +1,8 @@
 name: RealTimeWorld
-version: "2.1.0"
+version: "2.2.5"
 api-version: "1.13"
 main: it.blank517.realtimeworld.RealTimeWorld
-description: Syncronize the server time with your Minecraft worlds
+description: Make your Minecraft world last 24 hours!
 load: POSTWORLD
 author: Blank517
 authors: []

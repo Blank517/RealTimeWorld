@@ -8,18 +8,21 @@ import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
+
 
 class TabComplete implements TabCompleter {
 
     private final RealTimeWorld plugin;
-    private final HashMap<Integer, ArrayList<String>> Hints;
 
-    TabComplete(RealTimeWorld plugin, HashMap<Integer, ArrayList<String>> Hints) {
+    private ArrayList<String> Hints_1 = new ArrayList<>(Arrays.asList("disable", "enable", "gui", "timezone", "whitelist"));
+    private ArrayList<String> Hints_2_whitelist = new ArrayList<>(Arrays.asList("add", "list", "remove"));
+    private ArrayList<String> Hints_2_timezone = new ArrayList<>(Arrays.asList("get", "set"));
+
+    TabComplete(RealTimeWorld plugin) {
         this.plugin = plugin;
-        this.Hints = Hints;
     }
 
     @Override
@@ -27,21 +30,44 @@ class TabComplete implements TabCompleter {
                                       @NotNull String alias, @NotNull String[] args) {
         if (command.getName().equalsIgnoreCase("realtimeworld")) {
             final int argsLength = args.length;
-            if (argsLength <= 3) {
-                if (argsLength == 3) {
-                    List<World> worlds = plugin.getServer().getWorlds();
-                    ArrayList<String> Hints_3 = new ArrayList<>();
-                    for (World world : worlds) {
-                        Hints_3.add(world.getName());
-                    }
-                    Hints.put(3, Hints_3);
+            ArrayList<String> Hints = new ArrayList<>();
+            if (argsLength == 1) {
+                Hints.addAll(Hints_1);
+            } else if (argsLength == 2) {
+                if (args[0].equalsIgnoreCase("timezone")) {
+                    Hints.addAll(Hints_2_timezone);
+                } else if (args[0].equalsIgnoreCase("whitelist")) {
+                    Hints.addAll(Hints_2_whitelist);
                 }
-                final List<String> completions = new ArrayList<>();
-                // Copy matches of first argument from list (ex: if first arg is 'e' will return just 'enable')
-                StringUtil.copyPartialMatches(args[argsLength - 1], Hints.get(args.length), completions);
-                Collections.sort(completions);
-                return completions;
+            } else if (argsLength == 3) {
+                if (args[0].equalsIgnoreCase("timezone")) {
+                    if (args[1].equalsIgnoreCase("set")) {
+                        TimeZoneAndOffSet tzo = new TimeZoneAndOffSet();
+                        Hints.addAll(tzo.genTimeZoneList());
+                    }
+                } else if (args[0].equalsIgnoreCase("whitelist")) {
+                    if (args[1].equalsIgnoreCase("add")) {
+                        List<World> worlds = plugin.getServer().getWorlds();
+                        List<String> whitelist = plugin.getCustomConfig().get().getStringList("Whitelist");
+                        for (World world : worlds) {
+                            if (!whitelist.contains(world.getName())) {
+                                Hints.add(world.getName());
+                            }
+                        }
+                    } else if (args[1].equalsIgnoreCase("remove")) {
+                        List<String> whitelist = plugin.getCustomConfig().get().getStringList("Whitelist");
+                        Hints.addAll(whitelist);
+                    }
+                }
             }
+            if (Hints.isEmpty()) {
+                return null;
+            }
+            final List<String> completions = new ArrayList<>();
+            // Copy matches of first argument from list (ex: if first arg is 'e' will return just 'enable')
+            StringUtil.copyPartialMatches(args[argsLength - 1], Hints, completions);
+            Collections.sort(completions);
+            return completions;
         }
         return null;
     }
