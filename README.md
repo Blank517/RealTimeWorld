@@ -7,13 +7,14 @@
 <br>
 
 ## ![Description](https://lingtalfi.com/services/pngtext?color=852020&size=22&text=Description)
-This plugin lengthen the daylight cycle from 20 minutes to 24 hours synchronizing the time between the world (Earth 🌍) and the game worlds
+This plugin lengthen the daylight cycle from 20 minutes to 24 hours synchronizing the time between the World 🌍 and the game worlds
 
 The time is synchronized to the second so the sun 🌤️, the moon 🌔 and the stars ✨ make a smooth movement in the sky
 
 ## ![Features](https://lingtalfi.com/services/pngtext?color=852020&size=22&text=Features)
 -   Sync real-time with minecraft time
 -   Choose the worlds to sync
+-   An easy-to-use GUI
 -   Timezone support
 -   Lightweight
 
