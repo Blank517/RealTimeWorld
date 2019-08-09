@@ -26,6 +26,8 @@ The time is synchronized to the second so the sun 🌤️, the moon 🌔 and the
 | /rtw whitelist list           | Show in which worlds is enabled the synchronization |
 | /rtw whitelist add _world_    | Add a world to the whitelist                        |
 | /rtw whitelist remove _world_ | Remove a world from the whitelist                   |
+| /rtw timezone get             | Get the current timezone                            |
+| /rtw timezone set _timezone_  | Set the timezone                                    |
 
 ## ![Permissions](https://lingtalfi.com/services/pngtext?color=852020&size=22&text=Permissions)
 | Permission        | Description                         |
