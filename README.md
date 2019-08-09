@@ -16,6 +16,7 @@ The time is synchronized to the second so the sun 🌤️, the moon 🌔 and the
 -   Choose the worlds to sync
 -   An easy-to-use GUI
 -   Timezone support
+-   Asynchronous
 -   Lightweight
 
 ## ![Commands](https://lingtalfi.com/services/pngtext?color=852020&size=22&text=Commands)
