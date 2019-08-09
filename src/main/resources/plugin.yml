@@ -1,5 +1,5 @@
 name: RealTimeWorld
-version: "2.2.5"
+version: "2.2.6"
 api-version: "1.13"
 main: it.blank517.realtimeworld.RealTimeWorld
 description: Make your Minecraft world last 24 hours!

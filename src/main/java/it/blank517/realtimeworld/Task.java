@@ -28,7 +28,7 @@ class Task {
         initializeTask();
         plugin.getMethods().setWorldsDaylightCycle();
         plugin.getMethods().whitelistDaylightCycle(false);
-        task.runTaskTimer(plugin, 0, 20);
+        task.runTaskTimerAsynchronously(plugin, 0, 20);
         id = task.getTaskId();
     }
 
