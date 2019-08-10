@@ -1,5 +1,7 @@
 package it.blank517.realtimeworld;
 
+import org.bukkit.ChatColor;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -44,6 +46,8 @@ public class RealTimeWorld extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
+        ConsoleCommandSender console = plugin.getServer().getConsoleSender();
+
         if (!(new File(getDataFolder(), "config.yml")).exists()) {
             this.saveResource("config.yml", false);
         }
@@ -54,16 +58,16 @@ public class RealTimeWorld extends JavaPlugin {
                 .handleResponse((versionResponse, version) -> {
                     switch (versionResponse) {
                         case FOUND_NEW:
-                            getLogger().warning("New version of the plugin was found: " + version);
+                            console.sendMessage(ChatColor.GOLD + "New version of the plugin was found: " + version);
                             break;
                         case LATEST:
-                            getLogger().info("You are on the latest version of the plugin.");
+                            getLogger().info(ChatColor.GREEN + "You are running the latest version.");
                             break;
                         case UNAVAILABLE:
-                            getLogger().warning("Unable to perform an update check.");
+                            getLogger().warning(ChatColor.GOLD + "Unable to perform an update check.");
                             break;
                         default:
-                            getLogger().warning("There is a problem in the Update Checker.");
+                            getLogger().warning(ChatColor.RED + "There is a problem in the Update Checker.");
                             break;
                     }
                 }).check();
@@ -79,7 +83,7 @@ public class RealTimeWorld extends JavaPlugin {
         task = new Task(this);
 
         if (config.isEnabled()) {
-            getLogger().info(messages.get(1));
+            console.sendMessage(messages.get(1));
             BukkitRunnable runnable = new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -88,7 +92,7 @@ public class RealTimeWorld extends JavaPlugin {
             };
             runnable.runTaskLater(this, 1L);
         } else {
-            getLogger().info(messages.get(3));
+            console.sendMessage(messages.get(3));
             methods.setWorldsDaylightCycle();
         }
 

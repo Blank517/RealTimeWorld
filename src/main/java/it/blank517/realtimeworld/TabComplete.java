@@ -17,9 +17,9 @@ class TabComplete implements TabCompleter {
 
     private final RealTimeWorld plugin;
 
-    private ArrayList<String> Hints_1 = new ArrayList<>(Arrays.asList("disable", "enable", "gui", "timezone", "whitelist"));
-    private ArrayList<String> Hints_2_whitelist = new ArrayList<>(Arrays.asList("add", "list", "remove"));
-    private ArrayList<String> Hints_2_timezone = new ArrayList<>(Arrays.asList("get", "set"));
+    private final ArrayList<String> Hints_1 = new ArrayList<>(Arrays.asList("disable", "enable", "gui", "timezone", "whitelist"));
+    private final ArrayList<String> Hints_2_whitelist = new ArrayList<>(Arrays.asList("add", "list", "remove"));
+    private final ArrayList<String> Hints_2_timezone = new ArrayList<>(Arrays.asList("get", "set"));
 
     TabComplete(RealTimeWorld plugin) {
         this.plugin = plugin;

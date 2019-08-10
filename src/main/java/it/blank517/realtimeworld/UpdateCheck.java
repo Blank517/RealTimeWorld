@@ -5,7 +5,6 @@ import com.google.common.net.HttpHeaders;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -22,17 +21,17 @@ class UpdateCheck {
     private int resourceId = -1;
     private BiConsumer<VersionResponse, String> versionResponse;
 
-    private UpdateCheck(@Nonnull JavaPlugin javaPlugin) {
+    private UpdateCheck(JavaPlugin javaPlugin) {
         this.javaPlugin = Objects.requireNonNull(javaPlugin, "javaPlugin");
         this.currentVersion = javaPlugin.getDescription().getVersion();
     }
 
-    static UpdateCheck of(@Nonnull JavaPlugin javaPlugin) {
+    static UpdateCheck of(JavaPlugin javaPlugin) {
         return new UpdateCheck(javaPlugin);
     }
 
     @SuppressWarnings("unused")
-    UpdateCheck currentVersion(@Nonnull String currentVersion) {
+    UpdateCheck currentVersion(String currentVersion) {
         this.currentVersion = currentVersion;
         return this;
     }
@@ -43,7 +42,7 @@ class UpdateCheck {
         return this;
     }
 
-    UpdateCheck handleResponse(@Nonnull BiConsumer<VersionResponse, String> versionResponse) {
+    UpdateCheck handleResponse(BiConsumer<VersionResponse, String> versionResponse) {
         this.versionResponse = versionResponse;
         return this;
     }

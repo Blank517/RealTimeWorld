@@ -1,6 +1,5 @@
 package it.blank517.realtimeworld;
 
-import org.bukkit.GameRule;
 import org.bukkit.World;
 
 import java.time.Instant;
@@ -40,7 +39,7 @@ class Methods {
 
     void whitelistDaylightCycle(Boolean value) {
         for (String world : plugin.getCustomConfig().getWhitelist()) {
-            Objects.requireNonNull(plugin.getServer().getWorld(world)).setGameRule(GameRule.DO_DAYLIGHT_CYCLE, value);
+            Objects.requireNonNull(plugin.getServer().getWorld(world)).setGameRuleValue("doDaylightCycle", value.toString());
         }
     }
 
@@ -52,9 +51,9 @@ class Methods {
         }
         for (World world : worlds) {
             if (whitelist.contains(world.getName())) {
-                world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+                world.setGameRuleValue("doDaylightCycle", "false");
             } else {
-                world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
+                world.setGameRuleValue("doDaylightCycle", "true");
             }
         }
     }

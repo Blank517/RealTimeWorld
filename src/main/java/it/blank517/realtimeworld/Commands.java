@@ -111,7 +111,7 @@ class Commands implements CommandExecutor {
 
     private void cmdTimezone(CommandSender sender, String alias, String[] args, Config config, Messages messages) {
         if (argsLength == 2 && args[1].equalsIgnoreCase("get")) {
-            sender.sendMessage(messages.get(0, new String[]{alias}));
+            sender.sendMessage(messages.get(9, new String[]{config.getTimezone().toString()}));
         } else if (argsLength == 3 && args[1].equalsIgnoreCase("set")) {
             if (config.setTimezone(args[2])) {
                 config.save();
