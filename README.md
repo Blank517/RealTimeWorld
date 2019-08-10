@@ -48,4 +48,5 @@ The time is synchronized to the second so the sun 🌤️, the moon 🌔 and the
 -   ~~Update checker~~ Done ^-^
 -   ~~An inventory GUI to manage the worlds~~ Done ^-^
 -   ~~TimeZone support~~ Done ^-^
+-   ~~Compatibility from 1.9.4 to 1.14.*~~ Done ^-^
 -   Idk, what do you propose I might add? (•ิ_•ิ)?
