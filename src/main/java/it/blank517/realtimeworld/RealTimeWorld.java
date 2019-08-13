@@ -1,5 +1,6 @@
 package it.blank517.realtimeworld;
 
+import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.PluginManager;
@@ -46,7 +47,10 @@ public class RealTimeWorld extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-        ConsoleCommandSender console = plugin.getServer().getConsoleSender();
+
+        setupMetrics(this);
+
+        ConsoleCommandSender console = this.getServer().getConsoleSender();
 
         if (!(new File(getDataFolder(), "config.yml")).exists()) {
             this.saveResource("config.yml", false);
@@ -56,18 +60,19 @@ public class RealTimeWorld extends JavaPlugin {
                 .of(this)
                 .resourceId(70124)
                 .handleResponse((versionResponse, version) -> {
+                    String prefix = "[" + getDescription().getPrefix() + "] ";
                     switch (versionResponse) {
                         case FOUND_NEW:
-                            console.sendMessage(ChatColor.GOLD + "New version of the plugin was found: " + version);
+                            console.sendMessage(ChatColor.GOLD + prefix + "New version of the plugin was found: " + version);
                             break;
                         case LATEST:
-                            getLogger().info(ChatColor.GREEN + "You are running the latest version.");
+                            console.sendMessage(ChatColor.GREEN + prefix + "You are running the latest version.");
                             break;
                         case UNAVAILABLE:
-                            getLogger().warning(ChatColor.GOLD + "Unable to perform an update check.");
+                            console.sendMessage(ChatColor.GOLD + prefix + "Unable to perform an update check.");
                             break;
                         default:
-                            getLogger().warning(ChatColor.RED + "There is a problem in the Update Checker.");
+                            console.sendMessage(ChatColor.RED + prefix + "There is a problem in the Update Checker.");
                             break;
                     }
                 }).check();
@@ -101,5 +106,9 @@ public class RealTimeWorld extends JavaPlugin {
 
         Objects.requireNonNull(getCommand("realtimeworld")).setTabCompleter(new TabComplete(this));
         Objects.requireNonNull(getCommand("realtimeworld")).setExecutor(new Commands(this));
+    }
+
+    private void setupMetrics(RealTimeWorld plugin) {
+        Metrics metrics = new Metrics(plugin);
     }
 }
