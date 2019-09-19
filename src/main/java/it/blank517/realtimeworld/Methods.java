@@ -32,8 +32,8 @@ class Methods {
         double second = now.getSecond();
         double offset = hour < 12 ? 18000 : -6000;
         double tickHour = hour * 1000 + offset;
-        double tickMinute = 1000 / (60 / minute);
-        double tickSecond = (1000D / 60D / 60D) * second;
+        double tickMinute = 1000 / 60 * minute;
+        double tickSecond = 1000D / 60D / 60D * second;
         return Math.round(tickHour + tickMinute + tickSecond);
     }
 
