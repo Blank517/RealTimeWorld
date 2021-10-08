@@ -6,10 +6,7 @@ load: POSTWORLD
 author: Blank517
 website: https://www.spigotmc.org/resources/realtimeworld.70124/
 database: false
-depend: []
 prefix: RTW
-softdepend: []
-loadbefore: []
 commands:
   realtimeworld:
     description: RealTimeWorld command
