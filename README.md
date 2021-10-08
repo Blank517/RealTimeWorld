@@ -1,4 +1,4 @@
-[![Spiget tested server versions](https://img.shields.io/spiget/tested-versions/70124)](https://www.spigotmc.org/resources/70124/) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/629f86a31cc24040b362f48a796238fb)](https://app.codacy.com/app/Blank517/RealTimeWorld?utm_source=github.com&utm_medium=referral&utm_content=Blank517/RealTimeWorld&utm_campaign=Badge_Grade_Dashboard)
+[![Spiget tested server versions](https://img.shields.io/spiget/tested-versions/70124)](https://www.spigotmc.org/resources/70124/) [![CodeFactor](https://www.codefactor.io/repository/github/blank517/realtimeworld/badge)](https://www.codefactor.io/repository/github/blank517/realtimeworld)
 <p align="center">
 <img align="left" src="https://i.ibb.co/CKqbVFV/Real-Time-World-Logo.png">
 <img align="right" src="https://i.ibb.co/CKqbVFV/Real-Time-World-Logo.png">
