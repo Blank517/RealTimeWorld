@@ -1,10 +1,9 @@
 name: RealTimeWorld
 version: "2.4.0"
 main: it.blank517.realtimeworld.RealTimeWorld
-description: Make your Minecraft world last 24 hours!
+description: Make your Minecraft worlds last 24 hours!
 load: POSTWORLD
 author: Blank517
-authors: []
 website: https://www.spigotmc.org/resources/realtimeworld.70124/
 database: false
 depend: []
@@ -16,6 +15,7 @@ commands:
     description: RealTimeWorld command
     aliases: [rtw]
     permission: realtimeworld.cmd
+    permission-message: You do not have permission to use this command.
 permissions:
   realtimeworld.*:
     description: Allows a player to use any RealTimeWorld command
